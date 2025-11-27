@@ -37,7 +37,13 @@ The LLM then explains *why* a result is relevant — solving a real problem rese
 
 ### **1. Data Preparation**
 
-Dataset source: **NSF Award Abstracts Dataset (Kaggle)**
+Dataset source: The original full dataset is available on Kaggle:
+
+**NSF Awards Dataset (kaggle)**:https://www.kaggle.com/datasets/xiyaocheng/nsf-awards-dataset?select=nsf_dataset.csv
+**It is very large (~300MB), it cannot be hosted directly in this GitHub repository.**
+
+The processed clean data file is provided in Data folder as google drive link.
+
 
 Steps performed (documented in the evaluation notebook):
 
