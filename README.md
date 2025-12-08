@@ -1,120 +1,104 @@
-# Semantic-hybrid-retrieval-for-funding-discovery
+# 🧠 Semantic Hybrid Retrieval System for Academic Funding Discovery
 
-🧠 Semantic Hybrid Retrieval System for Academic Funding Discovery
+This project builds an intelligent retrieval system that helps researchers discover relevant NSF funding opportunities based on their research ideas.  
+It combines **keyword-based retrieval (BM25)** with **semantic retrieval (SBERT + FAISS)** and adds a **Large Language Model (LLM) for explainability**.
 
-This project builds an intelligent retrieval system that helps researchers discover relevant academic funding opportunities (e.g., NSF grants) based on their research ideas.
-By combining keyword-based retrieval (BM25) and semantic retrieval (Sentence-BERT + FAISS), it creates a hybrid Retrieval-Augmented Generation (RAG) pipeline for smarter and explainable funding discovery.
+This hybrid approach produces more meaningful search results and provides natural-language explanations for *why* the retrieved grants are relevant.
 
-🧩 Project Overview
+---
 
-Finding funding opportunities can be tedious when relying on keyword search.
-This system uses semantic embeddings and vector databases to go beyond simple word matching — it understands meaning and context.
-By integrating a Large Language Model (LLM), it provides human-readable explanations for why certain grants match a given query.
+## 🔍 Why This Project?
 
-🎯 Objectives
+Finding research funding often depends on exact keyword matches, which miss many relevant opportunities.  
+This system goes **beyond keyword matching** by understanding:
 
-Develop a hybrid grant retrieval system combining sparse and dense retrieval.
+- Semantic meaning  
+- Research context  
+- Topic relevance  
 
-Improve accuracy over traditional BM25 keyword search.
+The LLM then explains *why* a result is relevant — solving a real problem researchers face.
 
-Integrate RAG and LLMs for contextual understanding and interpretability.
+---
 
-Evaluate retrieval performance using standard IR metrics (Precision, nDCG, MRR).
+# 🎯 Objectives
 
-⚙️ Technical Workflow
-1. Data Preparation
+- Build a **hybrid semantic search engine** for NSF grants  
+- Improve over BM25 baseline using embeddings  
+- Add **explainable retrieval** using an LLM  
+- Evaluate retrieval performance using:
+  - Precision@5  
+  - nDCG@5  
+  - MRR  
+  - Human vs LLM agreement  
 
-Source: NSF Award Abstracts Dataset (Kaggle)
+---
 
-Tasks:
+# ⚙️ Technical Workflow
 
-Load and clean abstracts (remove formatting, symbols, etc.)
+### **1. Data Preparation**
+- Source: *NSF Award Abstracts Dataset (Kaggle)*  
+- Tasks:
+  - Clean abstracts  
+  - Remove duplicates / missing text  
+  - Standardize NSF program categories → **BIO, IIS, CNS, OTHER**  
+- Output saved as: `nsf_grants_clean.csv` (clean processed dataset used by the app)
 
-Standardize NSF program categories (BIO, CNS, IIS, OTHER)
+---
 
-Store processed text for downstream retrieval
+### **2. BM25 Baseline Retrieval**
+- Tokenize abstracts  
+- Build BM25 index  
+- Retrieve top-k grants  
+- Compute baseline IR metrics:
+  - Precision@5  
+  - MRR  
+  - nDCG  
 
-2. Baseline Sparse Retrieval (BM25)
+---
 
-Implement TF-IDF/BM25 to retrieve top-k grants for sample researcher queries.
+### **3. Semantic Retrieval (SBERT + FAISS)**
+- Encode abstracts using **Sentence-BERT (all-MiniLM-L6-v2)**  
+- Store vectors in FAISS index  
+- Perform dense retrieval  
+- Compare to BM25 performance  
 
-Evaluate ranking with metrics:
+---
 
-Precision@5
+### **4. Hybrid Retrieval**
+BM25 + SBERT combined:
 
-nDCG@5
 
-MRR@5
+This improves both **recall** and **semantic matching**, especially when query wording differs from the grant abstract.
 
-Acts as a benchmark for semantic retrieval improvements.
+---
 
-3. Dense Semantic Retrieval
+### **5. LLM Explainability (RAG Pipeline)**
+For each retrieved grant, the LLM:
 
-Use Sentence-BERT (SBERT) to embed both abstracts and queries into vector space.
+- Assigns a binary relevance label  
+- Generates a short explanation  
+- Justifies its label  
 
-Store embeddings in a FAISS vector database for efficient similarity search.
+This adds **interpretability**, which is essential for researchers.
 
-Compare semantic retrieval performance against BM25 baseline.
+---
 
-4. Hybrid RAG Pipeline
+### **6. Evaluation Framework**
+Includes both **quantitative** and **qualitative** evaluation:
 
-Combine semantic retrieval results with an LLM (like GPT) for contextual reasoning.
+#### Quantitative
+- Precision@5  
+- MRR  
+- nDCG  
+- Human vs LLM agreement score  
 
-The LLM:
+#### Qualitative
+- LLM-generated natural-language explanations  
+- Faithfulness and clarity  
 
-Generates short explanations for why a grant is relevant.
+---
 
-Helps align user’s research proposal ideas with grant descriptions.
+# 📁 Folder Structure
 
-5. Evaluation Framework
-
-Quantitative: Precision@k, nDCG, MRR.
-
-Qualitative: Faithfulness and relevance of LLM-generated explanations.
-
-Comparison: BM25 vs SBERT vs Hybrid retrieval results.
-
-🧪 Workflow Summary
-Dataset (NSF Abstracts)
-        ↓
-Data Cleaning & Preprocessing
-        ↓
-BM25 Baseline Retrieval
-        ↓
-Evaluate Baseline (Precision, nDCG, MRR)
-        ↓
-SBERT Embeddings + FAISS Index
-        ↓
-Semantic Retrieval (Top-k Results)
-        ↓
-RAG Integration (LLM Generates Explanations)
-        ↓
-Hybrid Evaluation (Quantitative + Qualitative)
-
-📂 Folder Structure
-semantic-retrieval-funding/
-│
-├── data/
-│   ├── raw/                # Original NSF dataset from Kaggle
-│   └── processed/          # Cleaned and categorized abstracts
-│
-├── notebooks/
-│   └── INFO556_Project_Update.ipynb  # Main Google Colab notebook
-│
-├── src/
-│   ├── bm25_baseline.py            # Keyword retrieval
-│   ├── semantic_retrieval.py       # SBERT + FAISS retrieval
-│   ├── rag_pipeline.py             # LLM integration for explanation
-│   ├── evaluation.py               # Precision, nDCG, MRR computations
-│   └── utils.py                    # Helper functions (cleaning, etc.)
-│
-├── results/
-│   ├── bm25_metrics.csv
-│   ├── sbert_metrics.csv
-│   └── visualizations/             # Graphs and comparison charts
-│
-├── requirements.txt
-├── README.md
-└── LICENSE
 
 
