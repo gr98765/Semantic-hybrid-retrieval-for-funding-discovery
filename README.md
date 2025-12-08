@@ -35,17 +35,27 @@ The LLM then explains *why* a result is relevant — solving a real problem rese
 
 # ⚙️ Technical Workflow
 
-### **1. Data Preparation**
-- Source: *NSF Award Abstracts Dataset (Kaggle)*  
-- Tasks:
-  - Clean abstracts  
-  - Remove duplicates / missing text  
-  - Standardize NSF program categories → **BIO, IIS, CNS, OTHER**  
-- Output saved as: `nsf_grants_clean.csv` (clean processed dataset used by the app)
+### **1. Data Preparation
+
+Dataset source: **NSF Award Abstracts Dataset (Kaggle)**
+
+Steps performed (documented in the evaluation notebook):
+
+1. Load dataset and remove duplicates + missing abstracts  
+2. Normalize NSF program codes  
+3. Map programs into 4 categories:  
+   - **BIO — Biological Sciences**  
+   - **CNS — Computer and Network Systems**  
+   - **IIS — Information & Intelligent Systems**  
+   - **OTHER — All remaining programs**  
+4. Downsample large classes for balance  
+5. Export final cleaned file: `nsf_grants_clean.csv`
 
 ---
 
-### **2. BM25 Baseline Retrieval**
+### **2. Retrieval Methodology**
+
+## BM25 Baseline Retrieval
 - Tokenize abstracts  
 - Build BM25 index  
 - Retrieve top-k grants  
@@ -56,23 +66,20 @@ The LLM then explains *why* a result is relevant — solving a real problem rese
 
 ---
 
-### **3. Semantic Retrieval (SBERT + FAISS)**
+## Semantic Retrieval (SBERT + FAISS)
 - Encode abstracts using **Sentence-BERT (all-MiniLM-L6-v2)**  
 - Store vectors in FAISS index  
-- Perform dense retrieval  
-- Compare to BM25 performance  
+- Perform dense retrieval    
 
 ---
 
-### **4. Hybrid Retrieval**
-BM25 + SBERT combined:
-
-
-This improves both **recall** and **semantic matching**, especially when query wording differs from the grant abstract.
+## Hybrid Retrieval
+-BM25 + SBERT combined:
+-This improves both **recall** and **semantic matching**, especially when query wording differs from the grant abstract.
 
 ---
 
-### **5. LLM Explainability (RAG Pipeline)**
+### **3. LLM Explainability (RAG Pipeline)**
 For each retrieved grant, the LLM:
 
 - Assigns a binary relevance label  
@@ -83,13 +90,15 @@ This adds **interpretability**, which is essential for researchers.
 
 ---
 
-### **6. Evaluation Framework**
+### **4. Evaluation Framework**
 Includes both **quantitative** and **qualitative** evaluation:
 
 #### Quantitative
-- Precision@5  
-- MRR  
-- nDCG  
+| Metric | Meaning |
+|--------|---------|
+| **Precision@5** | How many of the top-5 results are relevant |
+| **MRR** | Rank position of first relevant document |
+| **nDCG** | Penalizes relevant items appearing lower in ranking | 
 - Human vs LLM agreement score  
 
 #### Qualitative
