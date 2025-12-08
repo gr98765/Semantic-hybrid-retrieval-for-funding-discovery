@@ -35,7 +35,7 @@ The LLM then explains *why* a result is relevant — solving a real problem rese
 
 # ⚙️ Technical Workflow
 
-### **1. Data Preparation
+### **1. Data Preparation**
 
 Dataset source: **NSF Award Abstracts Dataset (Kaggle)**
 
@@ -55,7 +55,7 @@ Steps performed (documented in the evaluation notebook):
 
 ### **2. Retrieval Methodology**
 
-## BM25 Baseline Retrieval
+#### BM25 Baseline Retrieval
 - Tokenize abstracts  
 - Build BM25 index  
 - Retrieve top-k grants  
@@ -66,16 +66,16 @@ Steps performed (documented in the evaluation notebook):
 
 ---
 
-## Semantic Retrieval (SBERT + FAISS)
+#### Semantic Retrieval (SBERT + FAISS)
 - Encode abstracts using **Sentence-BERT (all-MiniLM-L6-v2)**  
 - Store vectors in FAISS index  
 - Perform dense retrieval    
 
 ---
 
-## Hybrid Retrieval
+#### Hybrid Retrieval
 -BM25 + SBERT combined:
--This improves both **recall** and **semantic matching**, especially when query wording differs from the grant abstract.
+This improves both **recall** and **semantic matching**, especially when query wording differs from the grant abstract.
 
 ---
 
@@ -99,11 +99,12 @@ Includes both **quantitative** and **qualitative** evaluation:
 | **Precision@5** | How many of the top-5 results are relevant |
 | **MRR** | Rank position of first relevant document |
 | **nDCG** | Penalizes relevant items appearing lower in ranking | 
-- Human vs LLM agreement score  
+- Human vs LLM agreement score- consistency between human labels and LLM labels  
 
 #### Qualitative
-- LLM-generated natural-language explanations  
-- Faithfulness and clarity  
+- **Human relevance labels used as ground truth** for validating retrieval  
+- **LLM-generated natural-language explanations** for each retrieved result  
+- **Assessment of explanation faithfulness and clarity** to ensure the reasoning matches the grant content   
 
 ---
 
