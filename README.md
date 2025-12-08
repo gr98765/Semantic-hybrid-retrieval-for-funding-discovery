@@ -109,8 +109,8 @@ Semantic-hybrid-retrieval-for-funding-discovery/
 ├── app.py                          # Streamlit UI for search + evaluation
 ├── retrieval_core.py               # Hybrid retrieval + evaluation logic
 │
-├── notebooks/
-│   └── IR_project_grant.ipynb      # Full evaluation notebook (BM25, SBERT, metrics)
+├── notebook/
+│   └── evaluation.ipynb      # Full evaluation notebook (BM25, SBERT, metrics)
 │
 ├── requirements.txt                # Python dependencies
 ├── README.md                       
@@ -119,11 +119,11 @@ Semantic-hybrid-retrieval-for-funding-discovery/
 
 ---
 
-# 🧪 Why Two Code Components?
+# Why Two Code Components?
 
 ### ✔️ `retrieval_core.py`
 **Purpose:**  
-Contains all retrieval logic needed by the Streamlit UI.
+Contains all retrieval logic (backend) needed by the Streamlit UI.
 
 Includes:
 - BM25 setup  
@@ -132,13 +132,11 @@ Includes:
 - LLM relevance + explanations  
 - Evaluation metrics  
 
-This file is **modular**, clean, and maps directly to project functionality → **Rubric Level 4**.
-
 ---
 
 ### ✔️ `app.py`
 **Purpose:**  
-Interactive Streamlit interface enabling:
+Interactive Streamlit interface enabling (frontend):
 
 - Query search  
 - Real-time retrieval  
@@ -147,11 +145,9 @@ Interactive Streamlit interface enabling:
 
 This file contains only **UI logic**, with all computation done in `retrieval_core.py`.
 
-Clean separation of concerns → **Rubric Level 4**.
-
 ---
 
-### ✔️ `IR_project_grant.ipynb` (Evaluation Notebook)
+### ✔️ `evaluation.ipynb` (Evaluation Notebook)
 **Why this exists separately:**
 
 The notebook documents the **full research workflow**:
@@ -163,50 +159,31 @@ The notebook documents the **full research workflow**:
 - Hybrid ranking analysis  
 - Metric comparison  
 
-This ensures the academic reproducibility required for grading → **Rubric Level 4**.
-
 The app focuses on *deployment*, while the notebook focuses on *methodology and evaluation*.  
 They are not duplicates — they serve different purposes.
 
 ---
 
-# 🚀 Installation
+# 1. Install dependencies
+pip install -r requirements.txt
 
+# 2. Set your OpenAI API key
+# -------------------------
+# Mac / Linux
+export OPENAI_API_KEY="your-key-here"
 
-Make sure you set your OpenAI key:
+# Windows PowerShell
+setx OPENAI_API_KEY "your-key-here"
 
+# (Restart terminal after running setx)
 
----
-
-# ▶️ Run the Streamlit App
-
+# 3. Run the Streamlit app
+streamlit run app.py
 
 You will see:
 
 - Search tab → semantic grant search  
 - Evaluation tab → metrics + human/LLM labels  
-
----
-
-# 📌 Notes for Grading (Helps You Get Level 4)
-
-### ✔️ Code Organization  
-- Retrieval logic and UI are separated  
-- Functions are modular and well-named  
-
-### ✔️ Code Quality  
-- No duplication  
-- Inline comments explaining key logic  
-- LLM functions documented clearly  
-
-### ✔️ Data Management  
-- Raw dataset excluded (too large), but processed dataset included  
-- Notebook documents full cleaning procedure  
-
-### ✔️ Documentation  
-- This README fully explains the pipeline  
-- Usage instructions included  
-- Each component justified  
 
 ---
 
