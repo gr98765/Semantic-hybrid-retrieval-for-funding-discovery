@@ -120,14 +120,21 @@ Includes both **quantitative** and **qualitative** evaluation:
 Semantic-hybrid-retrieval-for-funding-discovery/
 │
 ├── Data/
-│   └── nsf_grants_clean.csv        # Clean processed dataset (small + Git-safe)
+│   └── README.md                   # Link to the original and cleaned data(large files)
 │
 ├── app.py                          # Streamlit UI for search + evaluation
 ├── retrieval_core.py               # Hybrid retrieval + evaluation logic
 │
 ├── notebook/
-│   └── evaluation.ipynb      # Full evaluation notebook (BM25, SBERT, metrics)
-│
+│   └── evaluation.ipynb 
+|
+├── images/                           # UI screenshots
+│   ├── ui_demo_overview.png          #An overview of the UI interface
+│   ├── ui_search_page.png            # Search page screenshot
+│   ├── ui_evaluation_page.png        #Evaluation tab screenshot with results
+│   └── ui_results_detail.png         #Evaluation metrics shown
+|          
+|
 ├── requirements.txt                # Python dependencies
 ├── README.md                       
 └── .gitignore  
