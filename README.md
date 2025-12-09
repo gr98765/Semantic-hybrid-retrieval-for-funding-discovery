@@ -126,7 +126,7 @@ Semantic-hybrid-retrieval-for-funding-discovery/
 ├── retrieval_core.py               # Hybrid retrieval + evaluation logic
 │
 ├── notebook/
-│   └── evaluation.ipynb 
+│   └── evaluation.ipynb             # Full evaluation pipeline
 |
 ├── images/                           # UI screenshots
 │   ├── ui_demo_overview.png          #An overview of the UI interface
@@ -220,6 +220,3 @@ This project delivers:
 - A clean, interactive UI for demonstration  
 
 ---
-
-
-
