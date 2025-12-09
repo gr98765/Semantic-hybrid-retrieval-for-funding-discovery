@@ -97,6 +97,7 @@ human_labels = {
 # ===========================================
 
 def precision_at_5(h):
+    """Compute Precision@5 using human relevance labels."""
     return sum(h)/5
 
 def mrr(h):
