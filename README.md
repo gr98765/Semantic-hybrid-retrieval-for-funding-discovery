@@ -186,6 +186,7 @@ The app focuses on *deployment*, while the notebook focuses on *methodology and 
 They are not duplicates — they serve different purposes.
 
 ---
+### SETUP 
 
 # 1. Install dependencies
 pip install -r requirements.txt
